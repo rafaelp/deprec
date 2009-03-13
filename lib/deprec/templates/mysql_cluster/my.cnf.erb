@@ -1,0 +1,16 @@
+[client]
+port=3306
+socket=/tmp/mysql.sock
+[mysqld]
+ndbcluster
+# IP address of the cluster management node
+ndb-connectstring=<%= mysql_cluser_mgmt_host_ip %>
+default-storage-engine=NDBCLUSTER
+
+#Those are for future tuning
+#max_connections=341
+#query_cache_size=16M
+#thread_concurrency = 4
+[mysql_cluster]
+# IP address of the cluster management node
+ndb-connectstring=<%= mysql_cluser_mgmt_host_ip %>

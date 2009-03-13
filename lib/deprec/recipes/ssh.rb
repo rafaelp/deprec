@@ -3,6 +3,8 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :deprec do
     namespace :ssh do
       
+      set :ssh_script, ((ENV['DIST'] == 'gentoo') ? 'sshd' : 'ssh')      
+      
       SYSTEM_CONFIG_FILES[:ssh] = [
         
         {:template => "sshd_config.erb",
@@ -35,22 +37,22 @@ Capistrano::Configuration.instance(:must_exist).load do
 
       desc "Start ssh"
       task :start do
-        send(run_method, "/etc/init.d/ssh reload")
+        send(run_method, "/etc/init.d/#{ssh_script} reload")
       end
     
       desc "Stop ssh"
       task :stop do
-        send(run_method, "/etc/init.d/ssh reload")
+        send(run_method, "/etc/init.d/#{ssh_script} reload")
       end
     
       desc "Restart ssh"
       task :restart do
-        send(run_method, "/etc/init.d/ssh restart")
+        send(run_method, "/etc/init.d/#{ssh_script} restart")
       end
     
       desc "Reload ssh"
       task :reload do
-        send(run_method, "/etc/init.d/ssh reload")
+        send(run_method, "/etc/init.d/#{ssh_script} reload")
       end
       
       desc "Sets up authorized_keys file on remote server"

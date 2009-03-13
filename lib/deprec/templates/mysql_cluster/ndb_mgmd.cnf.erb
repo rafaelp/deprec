@@ -1,0 +1,33 @@
+[NDBD DEFAULT]
+NoOfReplicas=<%= mysql_cluster_data_nodes.size %>
+DataMemory=<%= mysql_cluster_data_memory %>    # How much memory to allocate for data storage
+IndexMemory=<%= mysql_cluster_index_memory %>   # How much memory to allocate for index storage
+# For DataMemory and IndexMemory, we have used the
+# default values. Since the "world" database takes up
+# only about 500KB, this should be more than enough for
+# this example Cluster setup.
+[MYSQLD DEFAULT]
+[NDB_MGMD DEFAULT]
+[TCP DEFAULT]
+
+# Section for the cluster management node
+<% mysql_cluster_mgmt_nodes.each do |host,ip| -%>
+[NDB_MGMD]
+# IP address of the management node (this system)
+HostName=<%= ip %>
+DataDir=/var/lib/mysql-cluster
+<% end -%>
+
+# Section for the storage nodes
+<% mysql_cluster_data_nodes.each do |host,ip| -%>
+[NDBD]
+# IP address of the first storage node
+HostName=<%= ip %>
+DataDir=/usr/local/mysql/data
+DataMemory=2048M
+<% end -%>
+
+# one [MYSQLD] per storage node
+<% mysql_cluster_data_nodes.each do |host,ip| -%>
+[MYSQLD]
+<% end -%>

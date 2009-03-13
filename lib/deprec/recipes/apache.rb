@@ -37,8 +37,8 @@ Capistrano::Configuration.instance(:must_exist).load do
       set :apache_config_file, '/usr/local/apache2/conf/httpd.conf'
       
       SRC_PACKAGES[:apache] = {
-        :md5sum => "80d3754fc278338033296f0d41ef2c04  httpd-2.2.9.tar.gz", 
-        :url => "http://www.apache.org/dist/httpd/httpd-2.2.9.tar.gz",
+        :md5sum => "03e0a99a5de0f3f568a0087fb9993af9  httpd-2.2.11.tar.gz", 
+        :url => "http://www.apache.org/dist/httpd/httpd-2.2.11.tar.gz",
         :configure => %w(
           ./configure
           --enable-mods-shared=all

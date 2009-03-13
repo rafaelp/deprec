@@ -430,6 +430,10 @@ module Deprec2
     end
   end
   
+  def host_dist(host)
+    return nodes[host][:dist]
+  end
+  
 end
 
 Capistrano.plugin :deprec2, Deprec2
